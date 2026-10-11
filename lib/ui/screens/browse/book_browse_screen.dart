@@ -206,8 +206,10 @@ class _BookBrowseScreenState extends State<BookBrowseScreen> {
 
 
   @override
-  Widget build(BuildContext context) =>
-      RequestInitialFocus(child: _buildContent(context));
+  Widget build(BuildContext context) {
+    if (PlatformDetection.isTV) return RequestInitialFocus(child: _buildContent(context));
+    return _buildContent(context);
+  }
 
   Widget _buildContent(BuildContext context) {
     return Scaffold(
@@ -215,6 +217,7 @@ class _BookBrowseScreenState extends State<BookBrowseScreen> {
       body: NavigationLayout(
         activeRoute: '/books/${widget.libraryId}',
         showBackButton: true,
+        showNavigationChrome: !_vm.isLoading,
         child: _vm.isLoading
             ? const SkeletonLibraryGrid(
                 cardWidth: 160,
