@@ -1173,9 +1173,7 @@ class _LibraryBrowseScreenState extends State<LibraryBrowseScreen>
                     // on one line, and its height is fixed, so it shrinks
                     // rather than wrapping out of its box.
                     child: SizedBox(
-                      height: _FocusedItemHud.heightFor(
-                        _prefs.get(UserPreferences.showRatingLabels),
-                      ),
+                      height: 65,
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: FittedBox(
@@ -2522,35 +2520,38 @@ class _FocusedItemHud extends StatelessWidget {
     this.showBadges = true,
   });
 
-  static double heightFor(bool showLabels) =>
-      (showLabels ? 105.0 : 86.0) * _desktopUiScaleFactor();
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: heightFor(showLabels),
+      height: 65,
       child: AnimatedSwitcher(
         duration: const Duration(milliseconds: 200),
         child: item == null
             ? const SizedBox.shrink(key: ValueKey('empty'))
-            : Column(
+            : Row(
                 key: ValueKey(item!.id),
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    item!.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  _MetadataRow(item: item!),
-                  const SizedBox(height: 4),
+                  //Column(
+                    //crossAxisAlignment: CrossAxisAlignment.start,
+                    //children: [
+                      Text(
+                        item!.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                      //const SizedBox(height: 2),
+                      const SizedBox(width: 15),
+                      _MetadataRow(item: item!),
+                    //]
+                  //),
+                  const SizedBox(width: 15),
                   RatingsRow(
                     ratings: ratings,
                     communityRating: item!.communityRating,
@@ -2561,7 +2562,6 @@ class _FocusedItemHud extends StatelessWidget {
                     showLabels: showLabels,
                     showBadges: showBadges,
                   ),
-                  const SizedBox(height: 2),
                 ],
               ),
       ),
