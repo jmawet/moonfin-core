@@ -1173,7 +1173,7 @@ class _LibraryBrowseScreenState extends State<LibraryBrowseScreen>
                     // on one line, and its height is fixed, so it shrinks
                     // rather than wrapping out of its box.
                     child: SizedBox(
-                      height: 65,
+                      height: 65 * scale,
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: FittedBox(
@@ -2522,8 +2522,9 @@ class _FocusedItemHud extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scale = _desktopUiScaleFactor();
     return SizedBox(
-      height: 65,
+      height: 65 * scale,
       child: AnimatedSwitcher(
         duration: const Duration(milliseconds: 200),
         child: item == null
@@ -2533,24 +2534,18 @@ class _FocusedItemHud extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  //Column(
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    //children: [
-                      Text(
-                        item!.name,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
-                      //const SizedBox(height: 2),
-                      const SizedBox(width: 15),
-                      _MetadataRow(item: item!),
-                    //]
-                  //),
+                  Text(
+                    item!.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                  _MetadataRow(item: item!),
                   const SizedBox(width: 15),
                   RatingsRow(
                     ratings: ratings,
